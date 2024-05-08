@@ -1,0 +1,54 @@
+package gg;
+import java.util.Random;
+import java.util.Scanner;
+
+
+
+public class GG {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        int lowerBound = 1;
+        int upperBound = 100;
+        int attempts = 0;
+        int rounds = 0;
+        int score = 0;
+        boolean playAgain = true;
+
+        while (playAgain) {
+            int targetNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            System.out.println("Guess a number between " + lowerBound + " and " + upperBound + ":");
+            boolean guessedCorrectly = false;
+            rounds++;
+
+            while (!guessedCorrectly && attempts < 5) {
+                int guess = scanner.nextInt();
+                attempts++;
+
+                if (guess == targetNumber) {
+                    System.out.println("Congratulations! You guessed the number " + targetNumber + " correctly.");
+                    score += (6 - attempts); 
+                    guessedCorrectly = true;
+                } else if (guess < targetNumber) {
+                    System.out.println("Too low! Try again.");
+                } else {
+                    System.out.println("Too high! Try again.");
+                }
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("You've reached the maximum number of attempts. The number was: " + targetNumber);
+            }
+
+            System.out.println("Your current score is: " + score);
+            attempts = 0; 
+
+            System.out.println("Do you want to play again? (yes/no)");
+            String playAgainChoice = scanner.next();
+            playAgain = playAgainChoice.equalsIgnoreCase("yes");
+        }
+
+        System.out.println("Thanks for playing! Your final score after " + rounds + " rounds is: " + score);
+        scanner.close();
+    }
+}
